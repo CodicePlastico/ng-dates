@@ -139,6 +139,46 @@
           }
         }
       }
+    },
+    "ng-dates": {
+      "root": "projects/ng-dates",
+      "sourceRoot": "projects/ng-dates/src",
+      "projectType": "library",
+      "prefix": "ng",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ng-dates/tsconfig.lib.json",
+            "project": "projects/ng-dates/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/ng-dates/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-dates/src/test.ts",
+            "tsConfig": "projects/ng-dates/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-dates/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-dates/tsconfig.lib.json",
+              "projects/ng-dates/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ng-dates-library"
