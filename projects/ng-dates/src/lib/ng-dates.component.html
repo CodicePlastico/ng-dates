@@ -1,0 +1,21 @@
+<div class="ng-dates">
+  <div class="ng-dates__header">
+    <button class="ng-dates__navigation ng-dates__navigation--prev" (click)="nextMonth()">&lt;</button>
+    <button class="ng-dates__navigation ng-dates__navigation--next" (click)="prevMonth()">&gt;</button>
+    <p class="ng-dates__title">{{title}}</p>
+  </div>
+  <div class="ng-dates__content">
+    <div class="ng-dates__week-days">
+      <div class="ng-dates__week-day" *ngFor="let day of days">{{day}}</div>
+    </div>
+    <div class="ng-dates__days" (mouseleave)="hoverOff()">
+      <div
+        class="ng-dates__day"
+        *ngFor="let day of daysInMonth"
+        [ngClass]="calculateCssClass(day.status)"
+        (click)="selectDay(day)"
+        (mouseenter) ="hoverOn(day)"
+      >{{ day.label }}</div>
+    </div>
+  </div>
+</div>

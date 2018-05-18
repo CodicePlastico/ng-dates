@@ -1,0 +1,128 @@
+$date-picker-selected: #006633;
+$date-picker-text: #090909;
+$date-picker-hover: #4A8B4F;
+$date-picker-bg: #FFF;
+
+$font-family-source-pro: 'Source Sans Pro', sans-serif;
+
+.ng-dates{
+  background-color: $date-picker-bg;
+  color: $date-picker-text;
+  width: 281px;
+  border-radius: 3px;
+  font-family: $font-family-source-pro;
+
+  &__header{
+    position: relative;
+    padding: 9px 28px 11px;
+  }
+
+  &__navigation{
+    display: block;
+    width: 6px;
+    height: 12px;
+    line-height: 12px;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    margin-top: -6px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:focus{
+      outline: none;
+    }
+
+    &--prev{
+      left: 11px;
+    }
+
+    &--next{
+      right: 11px;
+    }
+  }
+
+  &__title{
+    text-align: center;
+    font-size: 18px;
+    line-height: 23px;
+    margin: 0;
+  }
+
+  &__content{
+    width: 259px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &__week-days{
+    color: $date-picker-hover;
+    margin-bottom: 11px;
+    font-size: 16px;
+    line-height: 20px;
+
+    &:after{
+      content: ".";
+      visibility: hidden;
+      display: block;
+      height: 0;
+      clear: both;
+    }
+  }
+
+  &__week-day{
+    width: 33px;
+    margin: 2px;
+    float: left;
+  }
+
+  &__days{
+    padding-bottom: 11px;
+
+    &:after{
+      content: ".";
+      visibility: hidden;
+      display: block;
+      height: 0;
+      clear: both;
+    }
+  }
+
+  &__day{
+    width: 37px;
+    margin: 2px 0 7px;
+    float: left;
+    font-size: 16px;
+    line-height: 26px;
+    cursor: pointer;
+
+    &--selected{
+      background-color: $date-picker-selected;
+      color: $date-picker-bg;
+    }
+
+    &--today{
+      color: $date-picker-selected;
+      font-weight: bold;
+    }
+
+    &--hover{
+      background-color: $date-picker-hover;
+      color: $date-picker-bg;
+    }
+
+    &--disabled{
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    &--active{
+      &:hover{
+        background-color: $date-picker-hover;
+        color: $date-picker-bg;
+        border-radius: 2px;
+      }
+    }
+  }
+}
