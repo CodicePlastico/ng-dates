@@ -11,6 +11,7 @@
     [min]="minDay"
     [max]="maxDay"
     [from]="fromDay"
+    [current]="toDay"
     (selected)="show('DATE PICKER TO', $event)"
   ></ng-dates>
 </div>
@@ -19,6 +20,7 @@
   <ng-dates
     [min]="minDay"
     [max]="maxDay"
+    [current]="fromDay"
     [to]="toDay"
     (selected)="show('DATE PICKER TO', $event)"
   ></ng-dates>

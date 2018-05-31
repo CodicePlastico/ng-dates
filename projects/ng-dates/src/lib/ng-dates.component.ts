@@ -109,7 +109,7 @@ export class NgDatesComponent implements OnInit, OnChanges {
         this.toDay &&
         (
           (this.hoverDay && this.toDay > day && this.hoverDay < day) ||
-          (!this.hoverDay && this.current && this.fromDay > day && this.current < day)
+          (!this.hoverDay && this.current && this.toDay > day && this.current < day)
           )
       ) {
       status = 'hover';
