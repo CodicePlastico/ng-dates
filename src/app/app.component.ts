@@ -8,7 +8,8 @@ import * as moment from 'moment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public selectedDay: moment.Moment = moment().add('1', 'days');
+  public fromDay: moment.Moment = moment().add('1', 'days');
+  public toDay: moment.Moment = moment().add('15', 'days');
   public minDay: moment.Moment = moment().subtract('1', 'days');
   public maxDay: moment.Moment = moment().add('2', 'months');
 

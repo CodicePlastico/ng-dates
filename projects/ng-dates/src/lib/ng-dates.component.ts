@@ -17,6 +17,7 @@ export interface DayObject {
 export class NgDatesComponent implements OnInit, OnChanges {
 
   @Input() public from: momentNs.Moment;
+  @Input() public to: momentNs.Moment;
   @Input() public min: momentNs.Moment;
   @Input() public max: momentNs.Moment;
   @Input() public current: momentNs.Moment;
@@ -29,10 +30,12 @@ export class NgDatesComponent implements OnInit, OnChanges {
   public daysInMonth: DayObject[];
 
   private fromDay: momentNs.Moment;
+  private toDay: momentNs.Moment;
   private hoverDay: momentNs.Moment;
 
   public ngOnInit() {
     this.fromDay = this.from ? this.from.clone().startOf('day') : null;
+    this.toDay = this.to ? this.to.clone().startOf('day') : null;
     this.setTitle();
     this.calculateMonthDays();
   }
@@ -89,6 +92,7 @@ export class NgDatesComponent implements OnInit, OnChanges {
       status = 'disabled';
     } else if (
         (this.fromDay && this.fromDay.isSame(day)) ||
+        (this.toDay && this.toDay.isSame(day)) ||
         (!this.hoverDay && this.current && this.current.isSame(day)) ||
         (this.hoverDay && this.hoverDay.isSame(day))
       ) {
@@ -99,6 +103,14 @@ export class NgDatesComponent implements OnInit, OnChanges {
           (this.hoverDay && this.fromDay < day && this.hoverDay > day) ||
           (!this.hoverDay && this.current && this.fromDay < day && this.current > day)
         )
+      ) {
+      status = 'hover';
+    } else if (
+        this.toDay &&
+        (
+          (this.hoverDay && this.toDay > day && this.hoverDay < day) ||
+          (!this.hoverDay && this.current && this.fromDay > day && this.current < day)
+          )
       ) {
       status = 'hover';
     } else if (this.today && this.today.isSame(day)) {
@@ -138,14 +150,14 @@ export class NgDatesComponent implements OnInit, OnChanges {
   }
 
   public hoverOn(day: DayObject): void {
-    if (this.fromDay && (!this.hoverDay || !this.hoverDay.isSame(day.day))) {
+    if ((this.fromDay || this.toDay) && (!this.hoverDay || !this.hoverDay.isSame(day.day))) {
       this.hoverDay = day.day;
       this.calculateHoverDays();
     }
   }
 
   public hoverOff(): void {
-    if (this.fromDay) {
+    if (this.fromDay || this.toDay) {
       this.hoverDay = null;
       this.calculateHoverDays();
     }
