@@ -2,6 +2,27 @@
   <ng-dates
     [min]="minDay"
     [max]="maxDay"
+    [full]=true
+    (selected)="show('DATE PICKER FROM', $event)"
+  ></ng-dates>
+</div>
+
+<div style="margin: 20px;">
+  <ng-dates
+    [min]="minDay"
+    [max]="maxDay"
+    [startOfWeek]=1
+    [full]=true
+    (selected)="show('DATE PICKER FROM', $event)"
+  ></ng-dates>
+</div>
+
+<div style="margin: 20px;">
+  <ng-dates
+    [min]="minDay"
+    [max]="maxDay"
+    [startOfWeek]=2
+    [full]=true
     (selected)="show('DATE PICKER FROM', $event)"
   ></ng-dates>
 </div>

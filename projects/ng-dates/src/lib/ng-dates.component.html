@@ -1,7 +1,19 @@
 <div class="ng-dates">
   <div class="ng-dates__header">
-    <button class="ng-dates__navigation ng-dates__navigation--prev" (click)="nextMonth()">&lt;</button>
-    <button class="ng-dates__navigation ng-dates__navigation--next" (click)="prevMonth()">&gt;</button>
+    <button class="ng-dates__navigation ng-dates__navigation--prev" (click)="nextMonth()">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 1024 1024">
+        <g id="icomoon-ignore">
+        </g>
+        <path d="M439.236 510.080l209.084 207.36c5.402 5.341 8.748 12.752 8.748 20.945s-3.346 15.604-8.745 20.942l-0.003 0.003c-11.665 11.563-30.575 11.563-42.24 0l-230.4-228.497c-5.401-5.341-8.746-12.751-8.746-20.943 0-8.29 3.426-15.781 8.939-21.132l0.007-0.007 230.4-224.265c11.772-11.46 30.677-11.285 42.236 0.388 5.285 5.322 8.551 12.654 8.551 20.749 0 8.291-3.427 15.782-8.941 21.134l-0.007 0.007-208.883 203.315z"></path>
+      </svg>
+    </button>
+    <button class="ng-dates__navigation ng-dates__navigation--next" (click)="prevMonth()">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 1024 1024">
+        <g id="icomoon-ignore">
+        </g>
+        <path d="M584.764 510.080l-209.084 207.36c-5.402 5.341-8.748 12.752-8.748 20.945s3.346 15.604 8.745 20.942l0.003 0.003c11.665 11.563 30.575 11.563 42.24 0l230.4-228.497c5.401-5.341 8.746-12.751 8.746-20.943 0-8.29-3.426-15.781-8.939-21.132l-0.007-0.007-230.4-224.265c-11.772-11.46-30.677-11.285-42.236 0.388-5.285 5.322-8.551 12.654-8.551 20.749 0 8.291 3.427 15.782 8.941 21.134l0.007 0.007 208.883 203.315z"></path>
+      </svg>
+    </button>
     <p class="ng-dates__title">{{title}}</p>
   </div>
   <div class="ng-dates__content">
@@ -9,13 +21,16 @@
       <div class="ng-dates__week-day" *ngFor="let day of days">{{day}}</div>
     </div>
     <div class="ng-dates__days" (mouseleave)="hoverOff()">
-      <div
-        class="ng-dates__day"
-        *ngFor="let day of daysInMonth"
-        [ngClass]="calculateCssClass(day.status)"
-        (click)="selectDay(day)"
-        (mouseenter) ="hoverOn(day)"
-      >{{ day.label }}</div>
+      <ng-container *ngFor="let day of daysInMonth">
+        <div
+          class="ng-dates__day"
+          *ngIf="day"
+          [ngClass]="calculateCssClass(day.status)"
+          (click)="selectDay(day)"
+          (mouseenter) ="hoverOn(day)"
+        >{{ day.label }}</div>
+        <div class="ng-dates__day" *ngIf="!day"></div>
+      </ng-container>
     </div>
   </div>
 </div>

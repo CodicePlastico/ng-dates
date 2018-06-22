@@ -21,9 +21,12 @@ export class NgDatesComponent implements OnInit, OnChanges {
   @Input() public min: momentNs.Moment;
   @Input() public max: momentNs.Moment;
   @Input() public current: momentNs.Moment;
+  @Input() public startOfWeek = 0;
+  @Input() public full: boolean;
   @Output() public selected: EventEmitter<momentNs.Moment> = new EventEmitter();
 
-  public days: String[] = moment.weekdaysShort();
+
+  public days: String[];
   public title: String;
   public daysInMonth: DayObject[];
 
@@ -34,11 +37,24 @@ export class NgDatesComponent implements OnInit, OnChanges {
   private hoverDay: momentNs.Moment;
 
   public ngOnInit() {
+    this.days = this.weekDays().map((day) => {
+      return this.capitalize(day);
+    });
     this.fromDay = this.from ? this.from.clone().startOf('day') : null;
     this.toDay = this.to ? this.to.clone().startOf('day') : null;
     this.currentSelection = this.current ? this.current.clone().startOf('month').startOf('day') : moment().startOf('day');
     this.setTitle();
     this.calculateMonthDays();
+  }
+
+  public weekDays() {
+    const weekdays = moment.weekdaysShort();
+    weekdays.push(...weekdays.splice(0, this.startOfWeek));
+    return weekdays;
+  }
+
+  public capitalize(string: string) {
+    return string.toLocaleLowerCase().replace(/^[a-z]/, (m) => m.toUpperCase());
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -53,7 +69,7 @@ export class NgDatesComponent implements OnInit, OnChanges {
   }
 
   private setTitle(): void {
-    this.title = this.currentSelection.format('MMMM YYYY');
+    this.title = this.capitalize(this.currentSelection.format('MMMM YYYY'));
   }
 
   private calculateMonthDays(): void {
@@ -65,25 +81,34 @@ export class NgDatesComponent implements OnInit, OnChanges {
       currentMonthDays.push(dayObj);
     }
 
-    const firstDay = currentMonthDays[0].day;
     const prevMonthDays = [];
-    const firstDayWeek = firstDay.day();
-    const prevCount = firstDayWeek !== 0 ? firstDayWeek : 7;
-    for (let x = 1; x < prevCount; x++) {
+    const nextMonthDays = [];
+
+    const firstDay = currentMonthDays[0].day;
+    const prevCount = (((firstDay.day() - this.startOfWeek) % 7) + 7) % 7;
+    for (let x = 0; x < prevCount; x++) {
       const day = firstDay.clone().subtract(x, 'days');
       const dayObj = this.generateDateObject(day);
-      prevMonthDays.unshift(dayObj);
+      if (this.full) {
+        prevMonthDays.unshift(dayObj);
+      } else {
+        prevMonthDays.unshift(null);
+      }
     }
-
     const lastDay = currentMonthDays[days - 1].day;
-    const nextMonthDays = [];
     let nextCount = 0;
-    for (let y = lastDay.day(); y < 7 ; y++) {
+    const maxDays = ((6 + this.startOfWeek) - lastDay.day()) % 7;
+    for (let y = 0; y < maxDays ; y++) {
       nextCount++;
       const day = lastDay.clone().add(nextCount, 'days');
       const dayObj = this.generateDateObject(day);
-      nextMonthDays.push(dayObj);
+      if (this.full) {
+        nextMonthDays.push(dayObj);
+      } else {
+        nextMonthDays.unshift(null);
+      }
     }
+
     this.daysInMonth = [...prevMonthDays, ...currentMonthDays, ...nextMonthDays];
   }
 
@@ -146,7 +171,11 @@ export class NgDatesComponent implements OnInit, OnChanges {
 
   private calculateHoverDays(): void {
     this.daysInMonth = this.daysInMonth.map((day) => {
-      return this.generateDateObject(day.day);
+      if (day) {
+        return this.generateDateObject(day.day);
+      } else {
+        return day;
+      }
     });
   }
 

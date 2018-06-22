@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import * as moment from 'moment';
+import 'moment/locale/it';
 
 @Component({
   selector: 'ng-root',
@@ -13,6 +14,10 @@ export class AppComponent {
   public toDay: moment.Moment = moment().startOf('day').add('15', 'days');
   public minDay: moment.Moment = moment().startOf('day').subtract('1', 'days');
   public maxDay: moment.Moment = moment().startOf('day').add('2', 'months');
+
+  constructor() {
+    moment.locale('it');
+  }
 
   public show(string, evt) {
     console.log(string, evt);
