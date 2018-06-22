@@ -25,3 +25,13 @@
     (selected)="show('DATE PICKER TO', $event)"
   ></ng-dates>
 </div>
+
+<div style="margin: 20px;">
+  <ng-dates
+    [min]="minDay"
+    [max]="maxDay"
+    [current]="nextMonth"
+    [to]="maxDay"
+    (selected)="show('DATE PICKER TO', $event)"
+  ></ng-dates>
+</div>

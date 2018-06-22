@@ -24,11 +24,11 @@ export class NgDatesComponent implements OnInit, OnChanges {
   @Output() public selected: EventEmitter<momentNs.Moment> = new EventEmitter();
 
   public days: String[] = moment.weekdaysShort();
-  public currentSelection: momentNs.Moment = moment().startOf('day');
-  public today: momentNs.Moment = this.currentSelection.clone();
   public title: String;
   public daysInMonth: DayObject[];
 
+  public currentSelection: momentNs.Moment;
+  public today: momentNs.Moment = moment().startOf('day');
   private fromDay: momentNs.Moment;
   private toDay: momentNs.Moment;
   private hoverDay: momentNs.Moment;
@@ -36,6 +36,7 @@ export class NgDatesComponent implements OnInit, OnChanges {
   public ngOnInit() {
     this.fromDay = this.from ? this.from.clone().startOf('day') : null;
     this.toDay = this.to ? this.to.clone().startOf('day') : null;
+    this.currentSelection = this.current ? this.current.clone().startOf('month').startOf('day') : moment().startOf('day');
     this.setTitle();
     this.calculateMonthDays();
   }
