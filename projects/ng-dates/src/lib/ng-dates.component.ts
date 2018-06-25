@@ -6,7 +6,6 @@ const moment = momentNs;
 export interface DayObject {
   day: momentNs.Moment;
   label: string;
-  status: string;
 }
 
 @Component({
@@ -112,7 +111,15 @@ export class NgDatesComponent implements OnInit, OnChanges {
     this.daysInMonth = [...prevMonthDays, ...currentMonthDays, ...nextMonthDays];
   }
 
+
   private generateDateObject(day: momentNs.Moment): DayObject {
+    return {
+      day,
+      label: day.format('D')
+    };
+  }
+
+  private calculateDayStatus(day: momentNs.Moment): string {
     let status = '';
     if (this.min && this.min > day || this.max && this.max < day) {
       status = 'disabled';
@@ -144,11 +151,7 @@ export class NgDatesComponent implements OnInit, OnChanges {
     } else {
       status = 'active';
     }
-    return {
-      day,
-      label: day.format('D'),
-      status
-    };
+    return status;
   }
 
   public prevMonth(): void {
@@ -164,36 +167,26 @@ export class NgDatesComponent implements OnInit, OnChanges {
   }
 
   public selectDay(day: DayObject): void {
-    if (day.status !== 'disabled') {
+    const status = this.calculateDayStatus(day.day);
+    if (status !== 'disabled') {
       this.selected.emit(day.day);
     }
-  }
-
-  private calculateHoverDays(): void {
-    this.daysInMonth = this.daysInMonth.map((day) => {
-      if (day) {
-        return this.generateDateObject(day.day);
-      } else {
-        return day;
-      }
-    });
   }
 
   public hoverOn(day: DayObject): void {
     if ((this.fromDay || this.toDay) && (!this.hoverDay || !this.hoverDay.isSame(day.day))) {
       this.hoverDay = day.day;
-      this.calculateHoverDays();
     }
   }
 
   public hoverOff(): void {
     if (this.fromDay || this.toDay) {
       this.hoverDay = null;
-      this.calculateHoverDays();
     }
   }
 
-  public calculateCssClass(status: String): String {
+  public calculateCssClass(day: DayObject): String {
+    const status = this.calculateDayStatus(day.day);
     const dayPrefix = 'ng-dates__day--';
     return `${dayPrefix}${status}`;
   }
