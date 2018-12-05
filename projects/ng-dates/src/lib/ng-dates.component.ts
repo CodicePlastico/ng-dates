@@ -8,6 +8,33 @@ export interface DayObject {
   label: string;
 }
 
+export interface NgDatesColors {
+  background: string;
+  text: string;
+  day_selected_bg: string;
+  day_selected_bg_light: string;
+  day_selected_text: string;
+}
+export type NgDatesTheme = 'green' | 'red';
+export type NgDatesColorsInput = NgDatesColors | NgDatesTheme;
+
+const themeColors = {
+  green: {
+    background: '#FFF',
+    text: '#090909',
+    day_selected_bg: '#006633',
+    day_selected_bg_light: '#4A8B4F',
+    day_selected_text: '#FFF',
+  },
+  red: {
+    background: '#FFF',
+    text: '#000',
+    day_selected_bg: '#D20019',
+    day_selected_bg_light: '#E2343A',
+    day_selected_text: '#FFF',
+  }
+};
+
 @Component({
   selector: 'ng-dates',
   templateUrl: './ng-dates.component.html',
@@ -22,6 +49,7 @@ export class NgDatesComponent implements OnInit, OnChanges {
   @Input() public current: momentNs.Moment;
   @Input() public startOfWeek = 0;
   @Input() public full: boolean;
+  @Input() public colorScheme: NgDatesColorsInput;
   @Output() public selected: EventEmitter<momentNs.Moment> = new EventEmitter();
 
 
@@ -34,6 +62,9 @@ export class NgDatesComponent implements OnInit, OnChanges {
   private fromDay: momentNs.Moment;
   private toDay: momentNs.Moment;
   private hoverDay: momentNs.Moment;
+  private dayHover: momentNs.Moment;
+
+  public colors: NgDatesColors;
 
   public ngOnInit() {
     this.days = this.weekDays().map((day) => {
@@ -44,6 +75,17 @@ export class NgDatesComponent implements OnInit, OnChanges {
     this.currentSelection = this.current ? this.current.clone().startOf('month').startOf('day') : moment().startOf('day');
     this.setTitle();
     this.calculateMonthDays();
+
+    // set the colors
+    if (this.colorScheme) {
+      if (typeof this.colorScheme === 'string') { // predefined theme
+        this.colors = themeColors[this.colorScheme];
+      } else { // custom colors
+        this.colors = this.colorScheme;
+      }
+    } else { // default theme
+      this.colors = themeColors.green;
+    }
   }
 
   public weekDays() {
@@ -148,6 +190,8 @@ export class NgDatesComponent implements OnInit, OnChanges {
       status = 'hover';
     } else if (this.today && this.today.isSame(day)) {
       status = 'today';
+    } else if (this.dayHover && this.dayHover.isSame(day)) {
+      status = 'active-hover';
     } else {
       status = 'active';
     }
@@ -174,12 +218,14 @@ export class NgDatesComponent implements OnInit, OnChanges {
   }
 
   public hoverOn(day: DayObject): void {
+    this.dayHover = day.day;
     if ((this.fromDay || this.toDay) && (!this.hoverDay || !this.hoverDay.isSame(day.day))) {
       this.hoverDay = day.day;
     }
   }
 
   public hoverOff(): void {
+    this.dayHover = null;
     if (this.fromDay || this.toDay) {
       this.hoverDay = null;
     }
@@ -189,6 +235,30 @@ export class NgDatesComponent implements OnInit, OnChanges {
     const status = this.calculateDayStatus(day.day);
     const dayPrefix = 'ng-dates__day--';
     return `${dayPrefix}${status}`;
+  }
+
+  public calculateStyle(day: DayObject): any {
+    const status = this.calculateDayStatus(day.day);
+    const style = {};
+
+    if (status === 'selected') {
+      style['background-color'] = this.colors.day_selected_bg;
+      style['color'] = this.colors.day_selected_text;
+    } else if (status === 'today') {
+      style['color'] = this.colors.day_selected_bg;
+      style['font-weight'] = 'bold';
+    } else if (status === 'hover') {
+      style['background-color'] = this.colors.day_selected_bg_light;
+      style['color'] = this.colors.day_selected_text;
+    } else if (status === 'disabled') {
+      style['opacity'] = 0.4;
+    } else if (status === 'active-hover') {
+      style['background-color'] = this.colors.day_selected_bg_light;
+      style['color'] = this.colors.day_selected_text;
+      style['border-radius'] = '2px';
+    }
+
+    return style;
   }
 }
 

@@ -1,13 +1,7 @@
-$date-picker-selected: #006633;
-$date-picker-text: #090909;
-$date-picker-hover: #4A8B4F;
-$date-picker-bg: #FFF;
 
 $font-family-source-pro: 'Source Sans Pro', sans-serif;
 
 .ng-dates{
-  background-color: $date-picker-bg;
-  color: $date-picker-text;
   width: 281px;
   border-radius: 3px;
   font-family: $font-family-source-pro;
@@ -57,7 +51,6 @@ $font-family-source-pro: 'Source Sans Pro', sans-serif;
   }
 
   &__week-days{
-    color: $date-picker-hover;
     margin-bottom: 11px;
     font-size: 16px;
     line-height: 20px;
@@ -96,32 +89,5 @@ $font-family-source-pro: 'Source Sans Pro', sans-serif;
     font-size: 16px;
     line-height: 26px;
     cursor: pointer;
-
-    &--selected{
-      background-color: $date-picker-selected;
-      color: $date-picker-bg;
-    }
-
-    &--today{
-      color: $date-picker-selected;
-      font-weight: bold;
-    }
-
-    &--hover{
-      background-color: $date-picker-hover;
-      color: $date-picker-bg;
-    }
-
-    &--disabled{
-      opacity: 0.4;
-    }
-
-    &--active{
-      &:hover{
-        background-color: $date-picker-hover;
-        color: $date-picker-bg;
-        border-radius: 2px;
-      }
-    }
   }
 }

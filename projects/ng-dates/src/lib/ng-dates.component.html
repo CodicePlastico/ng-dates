@@ -1,4 +1,4 @@
-<div class="ng-dates">
+<div class="ng-dates" [ngStyle]="{ 'background-color': colors.background, 'color': colors.text }">
   <div class="ng-dates__header">
     <button class="ng-dates__navigation ng-dates__navigation--prev" (click)="nextMonth()">
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 1024 1024">
@@ -17,7 +17,7 @@
     <p class="ng-dates__title">{{title}}</p>
   </div>
   <div class="ng-dates__content">
-    <div class="ng-dates__week-days">
+    <div class="ng-dates__week-days" [ngStyle]="{ color: colors.day_selected_bg_light }">
       <div class="ng-dates__week-day" *ngFor="let day of days">{{day}}</div>
     </div>
     <div class="ng-dates__days" (mouseleave)="hoverOff()">
@@ -25,7 +25,7 @@
         <div
           class="ng-dates__day"
           *ngIf="day"
-          [ngClass]="calculateCssClass(day)"
+          [ngStyle]="calculateStyle(day)"
           (click)="selectDay(day)"
           (mouseenter) ="hoverOn(day)"
         >{{ day.label }}</div>
