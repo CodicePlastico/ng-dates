@@ -18,6 +18,13 @@ export interface NgDatesColors {
 export type NgDatesTheme = 'green' | 'red';
 export type NgDatesColorsInput = NgDatesColors | NgDatesTheme;
 
+export type RuleType = 'exclude' | 'include';
+
+export interface Rule {
+  type: RuleType;
+  dates: momentNs.Moment[];
+}
+
 const themeColors = {
   green: {
     background: '#FFF',
@@ -47,6 +54,7 @@ export class NgDatesComponent implements OnInit, OnChanges {
   @Input() public min: momentNs.Moment;
   @Input() public max: momentNs.Moment;
   @Input() public current: momentNs.Moment;
+  @Input() public availabilityRule: Rule;
   @Input() public startOfWeek = 0;
   @Input() public full: boolean;
   @Input() public colorScheme: NgDatesColorsInput;
@@ -161,9 +169,27 @@ export class NgDatesComponent implements OnInit, OnChanges {
     };
   }
 
+  private isExcluded(day: momentNs.Moment) {
+    if (this.availabilityRule) {
+      const found = this.availabilityRule.dates.find(d => {
+        const availableDay = d.clone().startOf('day');
+        return availableDay.isSame(day);
+      });
+      switch (this.availabilityRule.type) {
+        case 'exclude':
+          return found;
+        case 'include':
+          return !found;
+        default:
+          return false;
+      }
+    }
+    return false;
+  }
+
   private calculateDayStatus(day: momentNs.Moment): string {
     let status = '';
-    if (this.min && this.min > day || this.max && this.max < day) {
+    if (this.min && this.min > day || this.max && this.max < day || this.isExcluded(day)) {
       status = 'disabled';
     } else if (
         (this.fromDay && this.fromDay.isSame(day)) ||

@@ -6,8 +6,8 @@
     (selected)="show('DATE PICKER FROM', $event)"
   ></ng-dates>
   <ul>
-    <li>min: {{minDay.format('DD/MM/YYY')}}</li>
-    <li>max: {{maxDay.format('DD/MM/YYY')}}</li>
+    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
+    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
   </ul>
 </div>
 
@@ -20,9 +20,55 @@
     (selected)="show('DATE PICKER FROM', $event)"
   ></ng-dates>
   <ul>
-    <li>min: {{minDay.format('DD/MM/YYY')}}</li>
-    <li>max: {{maxDay.format('DD/MM/YYY')}}</li>
+    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
+    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
     <li>startOfWeek: 1</li>
+  </ul>
+</div>
+
+<div style="margin: 20px;">
+  <ng-dates
+    [min]="minDay"
+    [max]="maxDay"
+    [availabilityRule]="excludeRule"
+    [startOfWeek]=1
+    [full]=true
+    (selected)="show('DATE PICKER FROM', $event)"
+  ></ng-dates>
+  <ul>
+    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
+    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
+    <li>startOfWeek: 1</li>
+    <li>Exclude:
+      <ul>
+        <li *ngFor="let day of excludeRule.dates">
+          {{day.format('DD/MM/YYYY')}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div style="margin: 20px;">
+  <ng-dates
+    [min]="minDay"
+    [max]="maxDay"
+    [availabilityRule]="includeRule"
+    [startOfWeek]=1
+    [full]=true
+    (selected)="show('DATE PICKER FROM', $event)"
+  ></ng-dates>
+  <ul>
+    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
+    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
+    <li>startOfWeek: 1</li>
+    <li>Include:
+      <ul>
+        <li *ngFor="let day of includeRule.dates">
+          {{day.format('DD/MM/YYYY')}}
+        </li>
+      </ul>
+    </li>
   </ul>
 </div>
 
@@ -35,8 +81,8 @@
     (selected)="show('DATE PICKER FROM', $event)"
   ></ng-dates>
   <ul>
-    <li>min: {{minDay.format('DD/MM/YYY')}}</li>
-    <li>max: {{maxDay.format('DD/MM/YYY')}}</li>
+    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
+    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
     <li>startOfWeek: 2</li>
   </ul>
 </div>
@@ -50,10 +96,10 @@
     (selected)="show('DATE PICKER TO', $event)"
   ></ng-dates>
   <ul>
-    <li>min: {{minDay.format('DD/MM/YYY')}}</li>
-    <li>max: {{maxDay.format('DD/MM/YYY')}}</li>
-    <li>from: {{fromDay.format('DD/MM/YYY')}}</li>
-    <li>current: {{toDay.format('DD/MM/YYY')}}</li>
+    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
+    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
+    <li>from: {{fromDay.format('DD/MM/YYYY')}}</li>
+    <li>current: {{toDay.format('DD/MM/YYYY')}}</li>
   </ul>
 </div>
 
@@ -66,10 +112,10 @@
     (selected)="show('DATE PICKER TO', $event)"
   ></ng-dates>
   <ul>
-    <li>min: {{minDay.format('DD/MM/YYY')}}</li>
-    <li>max: {{maxDay.format('DD/MM/YYY')}}</li>
-    <li>to: {{toDay.format('DD/MM/YYY')}}</li>
-    <li>current: {{fromDay.format('DD/MM/YYY')}}</li>
+    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
+    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
+    <li>to: {{toDay.format('DD/MM/YYYY')}}</li>
+    <li>current: {{fromDay.format('DD/MM/YYYY')}}</li>
   </ul>
 </div>
 
@@ -82,9 +128,9 @@
     (selected)="show('DATE PICKER TO', $event)"
   ></ng-dates>
   <ul>
-    <li>min: {{minDay.format('DD/MM/YYY')}}</li>
-    <li>max: {{maxDay.format('DD/MM/YYY')}}</li>
-    <li>to: {{maxDay.format('DD/MM/YYY')}}</li>
-    <li>current: {{nextMonth.format('DD/MM/YYY')}}</li>
+    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
+    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
+    <li>to: {{maxDay.format('DD/MM/YYYY')}}</li>
+    <li>current: {{nextMonth.format('DD/MM/YYYY')}}</li>
   </ul>
 </div>
