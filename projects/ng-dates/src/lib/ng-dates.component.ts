@@ -135,7 +135,7 @@ export class NgDatesComponent implements OnInit, OnChanges {
 
     const firstDay = currentMonthDays[0].day;
     const prevCount = (((firstDay.day() - this.startOfWeek) % 7) + 7) % 7;
-    for (let x = 0; x < prevCount; x++) {
+    for (let x = 1; x <= prevCount; x++) {
       const day = firstDay.clone().subtract(x, 'days');
       const dayObj = this.generateDateObject(day);
       if (this.full) {
