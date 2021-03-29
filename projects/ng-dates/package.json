@@ -1,8 +1,12 @@
 {
   "name": "ng-dates",
-  "version": "0.2.0",
+  "version": "0.3.0",
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
   "peerDependencies": {
-    "@angular/common": "^9.0.0",
-    "@angular/core": "^9.0.0"
+    "@angular/common": "^11.0.0",
+    "@angular/core": "^11.0.0",
+    "moment": "^2.29.1"
   }
 }
