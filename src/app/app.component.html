@@ -1,136 +1,126 @@
-<div style="margin: 20px;">
-  <ng-dates
-    [min]="minDay"
-    [max]="maxDay"
-    [full]=true
-    (selected)="show('DATE PICKER FROM', $event)"
-  ></ng-dates>
-  <ul>
-    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
-    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
-  </ul>
-</div>
+<div class="dt-demo">
+  <h1 class="dt-demo__title">Ng Dates</h1>
+  <p class="dt-demo__description">
+    Ng Dates is a simple <strong>date picker</strong> for
+    <a href="https://angular.io" target="_blank" rel="nofollow noopener">Angular</a> applications.<br/>
+    Inspired by <a href="https://www.ryanair.com/" target="_blank" rel="nofollow noopener">Ryanair</a> datepicker, allows you to select a <strong>single date</strong> or a <strong>range</strong> of dates from a predeterminated set.<br/>
+    <strong>Powerful</strong> and <strong>configurable</strong> can be easily integrated into any Angular application.
+  </p>
+  <form class="dt-demo__form" [formGroup]="formGroup">
+    <h2 class="dt-demo__form-title">Base controls</h2>
+    <div class="dt-demo__form-section">
+      <div class="dt-demo__form-group">
+        <label class="dt-demo__form-label" for="min">Minimum selectable date</label>
+        <input class="dt-demo__form-text" id="min" type="date" formControlName="min"/>
+      </div>
+      <div class="dt-demo__form-group">
+        <label class="dt-demo__form-label" for="max">Maximum selectable date</label>
+        <input class="dt-demo__form-text" id="max" type="date" formControlName="max"/>
+      </div>
+      <div class="dt-demo__form-subsection" formGroupName="range">
+        <div class="dt-demo__form-group dt-demo__form-group--radio">
+          <input class="dt-demo__form-radio" id="from-true" type="radio" formControlName="from" value="from" />
+          <label class="dt-demo__form-label" for="from-true">From</label>
+          <input class="dt-demo__form-radio" id="from-false" type="radio" formControlName="from" value="to" />
+          <label class="dt-demo__form-label" for="from-false">To</label>
+        </div>
+        <div class="dt-demo__form-group dt-demo__form-group--flex">
+          <label class="dt-demo__form-label" for="value">Selected date</label>
+          <input class="dt-demo__form-text"id="value" type="date" formControlName="value"/>
+        </div>
+      </div>
+      <div class="dt-demo__form-group">
+        <label class="dt-demo__form-label" for="current">Current</label>
+        <input class="dt-demo__form-text" id="current" type="date" formControlName="current"/>
+      </div>
+      <div class="dt-demo__form-group">
+        <label class="dt-demo__form-label" for="startOfWeek">Start Of Week</label>
+        <input class="dt-demo__form-text" id="startOfWeek" type="number" formControlName="startOfWeek" min="0" max="6"/>
+      </div>
+      <div class="dt-demo__form-group">
+        <label class="dt-demo__form-label" for="full">Full view</label>
+        <input class="dt-demo__form-checkbox" id="full" type="checkbox" formControlName="full"/>
+      </div>
+    </div>
+    <h2 class="dt-demo__form-title">Availability Rule</h2>
+    <div class="dt-demo__form-section" formGroupName="availabilityRules">
+      <div class="dt-demo__form-group dt-demo__form-group--radio">
+        <input class="dt-demo__form-radio" id="type-exclude" type="radio" formControlName="type" value="exclude" />
+        <label class="dt-demo__form-label" for="type-exclude">Exclude</label>
+        <input class="dt-demo__form-radio" id="type-include" type="radio" formControlName="type" value="include" />
+        <label class="dt-demo__form-label" for="type-include">Include</label>
+      </div>
+      <div class="dt-demo__form-group">
+        <label class="dt-demo__form-label" for="dates">Current</label>
+        <input class="dt-demo__form-text" id="dates" type="date" [formControl]="availabilityDate"/>
+      </div>
+      <div class="dt-demo__dates">
+        <h3 class="dt-demo__dates-title" *ngIf="dates.length > 0">Selected dates</h3>
+        <ul class="dt-demo__dates-list">
+          <li class="dt-demo__dates-item" *ngFor="let date of dates; let i = index">
+            {{ date.format('DD MM YYYY')}}
+            <button class="dt-demo__dates-button" (click)="deleteDate(i)">
+              <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                <g data-name="1" id="_1">
+                  <path d="M356.65,450H171.47a41,41,0,0,1-40.9-40.9V120.66a15,15,0,0,1,15-15h237a15,15,0,0,1,15,15V409.1A41,41,0,0,1,356.65,450ZM160.57,135.66V409.1a10.91,10.91,0,0,0,10.9,10.9H356.65a10.91,10.91,0,0,0,10.91-10.9V135.66Z"/><path d="M327.06,135.66h-126a15,15,0,0,1-15-15V93.4A44.79,44.79,0,0,1,230.8,48.67h66.52A44.79,44.79,0,0,1,342.06,93.4v27.26A15,15,0,0,1,327.06,135.66Zm-111-30h96V93.4a14.75,14.75,0,0,0-14.74-14.73H230.8A14.75,14.75,0,0,0,216.07,93.4Z"/><path d="M264.06,392.58a15,15,0,0,1-15-15V178.09a15,15,0,1,1,30,0V377.58A15,15,0,0,1,264.06,392.58Z"/><path d="M209.9,392.58a15,15,0,0,1-15-15V178.09a15,15,0,0,1,30,0V377.58A15,15,0,0,1,209.9,392.58Z"/><path d="M318.23,392.58a15,15,0,0,1-15-15V178.09a15,15,0,0,1,30,0V377.58A15,15,0,0,1,318.23,392.58Z"/>
+                  <path d="M405.81,135.66H122.32a15,15,0,0,1,0-30H405.81a15,15,0,0,1,0,30Z"/>
+                </g>
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <h2 class="dt-demo__form-title">Color Scheme</h2>
+    <div class="dt-demo__form-section" formGroupName="color">
 
-<div style="margin: 20px;">
-  <ng-dates
-    [min]="minDay"
-    [max]="maxDay"
-    [startOfWeek]=1
-    [full]=true
-    (selected)="show('DATE PICKER FROM', $event)"
-  ></ng-dates>
-  <ul>
-    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
-    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
-    <li>startOfWeek: 1</li>
-  </ul>
-</div>
-
-<div style="margin: 20px;">
-  <ng-dates
-    [min]="minDay"
-    [max]="maxDay"
-    [availabilityRule]="excludeRule"
-    [startOfWeek]=1
-    [full]=true
-    (selected)="show('DATE PICKER FROM', $event)"
-  ></ng-dates>
-  <ul>
-    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
-    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
-    <li>startOfWeek: 1</li>
-    <li>Exclude:
-      <ul>
-        <li *ngFor="let day of excludeRule.dates">
-          {{day.format('DD/MM/YYYY')}}
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
-
-<div style="margin: 20px;">
-  <ng-dates
-    [min]="minDay"
-    [max]="maxDay"
-    [availabilityRule]="includeRule"
-    [startOfWeek]=1
-    [full]=true
-    (selected)="show('DATE PICKER FROM', $event)"
-  ></ng-dates>
-  <ul>
-    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
-    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
-    <li>startOfWeek: 1</li>
-    <li>Include:
-      <ul>
-        <li *ngFor="let day of includeRule.dates">
-          {{day.format('DD/MM/YYYY')}}
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
-
-<div style="margin: 20px;">
-  <ng-dates
-    [min]="minDay"
-    [max]="maxDay"
-    [startOfWeek]=2
-    [full]=true
-    (selected)="show('DATE PICKER FROM', $event)"
-  ></ng-dates>
-  <ul>
-    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
-    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
-    <li>startOfWeek: 2</li>
-  </ul>
-</div>
-
-<div style="margin: 20px;">
-  <ng-dates
-    [min]="minDay"
-    [max]="maxDay"
-    [from]="fromDay"
-    [current]="toDay"
-    (selected)="show('DATE PICKER TO', $event)"
-  ></ng-dates>
-  <ul>
-    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
-    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
-    <li>from: {{fromDay.format('DD/MM/YYYY')}}</li>
-    <li>current: {{toDay.format('DD/MM/YYYY')}}</li>
-  </ul>
-</div>
-
-<div style="margin: 20px;">
-  <ng-dates
-    [min]="minDay"
-    [max]="maxDay"
-    [current]="fromDay"
-    [to]="toDay"
-    (selected)="show('DATE PICKER TO', $event)"
-  ></ng-dates>
-  <ul>
-    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
-    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
-    <li>to: {{toDay.format('DD/MM/YYYY')}}</li>
-    <li>current: {{fromDay.format('DD/MM/YYYY')}}</li>
-  </ul>
-</div>
-
-<div style="margin: 20px;">
-  <ng-dates
-    [min]="minDay"
-    [max]="maxDay"
-    [current]="nextMonth"
-    [to]="maxDay"
-    (selected)="show('DATE PICKER TO', $event)"
-  ></ng-dates>
-  <ul>
-    <li>min: {{minDay.format('DD/MM/YYYY')}}</li>
-    <li>max: {{maxDay.format('DD/MM/YYYY')}}</li>
-    <li>to: {{maxDay.format('DD/MM/YYYY')}}</li>
-    <li>current: {{nextMonth.format('DD/MM/YYYY')}}</li>
-  </ul>
+      <div class="dt-demo__form-group dt-demo__form-group--radio">
+        <input class="dt-demo__form-radio" id="color-green" type="radio" formControlName="scheme" value="green" />
+        <label class="dt-demo__form-label" for="color-green">Green</label>
+        <input class="dt-demo__form-radio" id="color-red" type="radio" formControlName="scheme" value="red" />
+        <label class="dt-demo__form-label" for="color-red">Red</label>
+        <input class="dt-demo__form-radio" id="color-custom" type="radio" formControlName="scheme" value="custom" />
+        <label class="dt-demo__form-label" for="color-custom">Custom</label>
+      </div>
+    </div>
+    <div class="dt-demo__form-section" formGroupName="color" *ngIf="formValues && formValues.scheme === 'custom'">
+      <ng-container formGroupName="colorScheme">
+        <div class="dt-demo__form-group">
+          <label class="dt-demo__form-label" for="background">Background</label>
+          <input class="dt-demo__form-text" id="background" type="color" formControlName="background"/>
+        </div>
+        <div class="dt-demo__form-group">
+          <label class="dt-demo__form-label" for="text">Text</label>
+          <input class="dt-demo__form-text" id="text" type="color" formControlName="text"/>
+        </div>
+        <div class="dt-demo__form-group">
+          <label class="dt-demo__form-label" for="day_selected_bg">Selected Day Background</label>
+          <input class="dt-demo__form-text" id="day_selected_bg" type="color" formControlName="day_selected_bg"/>
+        </div>
+        <div class="dt-demo__form-group">
+          <label class="dt-demo__form-label" for="day_selected_bg_light">Hover Background</label>
+          <input class="dt-demo__form-text" id="day_selected_bg_light" type="color" formControlName="day_selected_bg_light"/>
+        </div>
+        <div class="dt-demo__form-group">
+          <label class="dt-demo__form-label" for="day_selected_text">Selected Day Text</label>
+          <input class="dt-demo__form-text" id="day_selected_text" type="color" formControlName="day_selected_text"/>
+        </div>
+      </ng-container>
+    </div>
+  </form>
+  <div class="dt-demo__picker">
+    <ng-dates
+      [min]="formValues.min"
+      [max]="formValues.max"
+      [current]="formValues.current"
+      [to]="formValues.to"
+      [from]="formValues.from"
+      [full]="formValues.full"
+      [startOfWeek]="formValues.startOfWeek"
+      [colorScheme]="formValues.colorScheme"
+      [availabilityRule]="formValues.availabilityRule"
+      (selected)="show('DATE PICKER FROM', $event)"
+    ></ng-dates>
+  </div>
+  <h2 class="dt-demo__subtitle" *ngIf="formValues.current">Selected date: {{formValues.current | date: 'dd/MM/yyyy'}}</h2>
 </div>

@@ -75,6 +75,10 @@ export class NgDatesComponent implements OnInit, OnChanges {
   public colors: NgDatesColors;
 
   public ngOnInit() {
+    this.setup();
+  }
+
+  private setup() {
     this.days = this.weekDays().map((day) => {
       return this.capitalize(day);
     });
@@ -107,14 +111,7 @@ export class NgDatesComponent implements OnInit, OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.current) {
-      const { previousValue, currentValue, firstChange} = changes.current;
-      if (!firstChange && previousValue !== currentValue) {
-        if (currentValue) {
-          this.calculateMonthDays();
-        }
-      }
-    }
+    this.setup();
   }
 
   private setTitle(): void {
