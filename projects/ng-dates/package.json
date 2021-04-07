@@ -1,6 +1,6 @@
 {
   "name": "ng-dates",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Simple Angular Date Picker",
   "keywords": ["dates", "date-picker", "angular", "typescript", "momentjs"],
   "repository": "github:CodicePlastico/ng-dates",
