@@ -36,10 +36,10 @@ Insert `ng-dates` component in your HTML template
 | min             		| `Moment`                            | `undefined`        | Minimum selectable date                                                                                                                                                                                                         |  
 | max          			| `Moment`                            | `undefined`        | Max selectable date                                                                                                                                                                                                                  |  
 | current    		       | `Moment`                            | `undefined`        | Current selection                                                                                                                                           |  
-| availabilityRule     | `{type: exclude | include, dates: Moment[]`| `undefined`       | Allows to narrow the range of selectable dates by including or excluding specific days                                         |  
+| availabilityRule     | `{type: exclude \| include, dates: Moment[]`| `undefined`       | Allows to narrow the range of selectable dates by including or excluding specific days                                         |  
 | startOfWeek          | `Number`                            | 0                  | A number from 0 to 6 to indicate the first day of the week (starting with Sunday)|  
 | full              	| `Boolean`                    | `true`        | Show/Hide prev and next months days. |  
-| colorScheme          | `green | red | NgDatesColors*`                    | `green`        | Customize colors. 
+| colorScheme          | `green \| red \| NgDatesColors*`                    | `green`        | Customize colors. 
 
 ```
 * interface NgDatesColors {
