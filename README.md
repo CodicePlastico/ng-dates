@@ -14,7 +14,7 @@ Download ng-dates from npm
 npm install ng-dates
 ```
 
-## Usage
+##Usage
 Import `NgDatesModule` module in your `AppModule`
 
 ```js
@@ -38,8 +38,7 @@ Insert `ng-dates` component in your HTML template
 | current    		       | `Moment`                            | `undefined`        | Current selection                                                                                                                                           |  
 | availabilityRule     | `{type: exclude | include, dates: Moment[]`| `undefined`       | Allows to narrow the range of selectable dates by including or excluding specific days                                         |  
 | startOfWeek          | `Number`                            | 0                  | A number from 0 to 6 to indicate the first day of the week (starting with Sunday)|  
-| full              	| `Boolean`                    | `true`        | Show/Hide prev and next months days. 
-|  
+| full              	| `Boolean`                    | `true`        | Show/Hide prev and next months days. |  
 | colorScheme          | `green | red | NgDatesColors*`                    | `green`        | Customize colors. 
 
 ```
