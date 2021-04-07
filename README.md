@@ -14,7 +14,7 @@ Download ng-dates from npm
 npm install ng-dates
 ```
 
-##Usage
+## Usage
 Import `NgDatesModule` module in your `AppModule`
 
 ```js
