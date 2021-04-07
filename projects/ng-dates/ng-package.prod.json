@@ -6,5 +6,8 @@
     "umdModuleIds": {
       "moment": "momentNs"
     }
-  }
+  },
+  "assets": [
+    "README.md"
+  ]
 }
